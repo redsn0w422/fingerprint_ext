@@ -1,0 +1,13 @@
+{
+    "name": "Fingerprint Notifier",
+    "version": "1.0",
+    "manifest_version": 1,
+    "content_scripts": [
+      {
+        "matches": [
+          "<all_urls>"
+        ],
+        "js": ["content.js"]
+      }
+    ]
+}
