@@ -18,6 +18,22 @@
 // notification.show();
 
 // TODO: wrap functions!
-var wrap = require('lodash.wrap');
+// var wrap = require('lodash.wrap');
 
 chrome.runtime.sendMessage({message: window.location.toString()});
+var doThing = function(){
+    console.log(...arguments)
+}
+
+var wrap = function(someFunction){
+    var wrappedFunction = function(){
+      var args = [...arguments].splice(0)
+      console.log(`You're about to run a function with these arguments: \n     ${args}`)
+      return someFunction(args)
+    }
+    return wrappedFunction
+}
+
+doThing = wrap(doThing);
+
+doThing('one', {two:'two'}, 3);
