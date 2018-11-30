@@ -4,8 +4,8 @@
   <title>Fingerprint Test Site</title>
   <script>
       navigator.mediaDevices.enumerateDevices().then(function (devices) {
-      done(devices.map(function (device) {
-        console.log('id=' + device.deviceId + ';gid=' + device.groupId + ';' + device.kind + ';' + device.label)
+      console.log(devices.map(function (device) {
+        return 'id=' + device.deviceId + ';gid=' + device.groupId + ';' + device.kind + ';' + device.label
       }))
     })
       .catch(function (error) {

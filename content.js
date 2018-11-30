@@ -26,14 +26,19 @@ var hook = function() {
     var wrap = function(someFunction){
         var wrappedFunction = function(){
             var args = [...arguments].splice(0)
-            console.log(`fn: ${someFunction.toString()}\nargs: ${args}`)
+            console.log(`HOOKED\tfn: ${someFunction.toString()}\nargs: ${args}`)
             return someFunction(args)
         }
         return wrappedFunction
     }
+    // var test = "window.navigator.mediaDevices.enumerateDevices"
+    // var ftest = eval(test)
+    // ftest = wrap(ftest)
     window.navigator.mediaDevices.enumerateDevices = wrap(window.navigator.mediaDevices.enumerateDevices)
+
 };
 
 var script = document.createElement('script');
 script.textContent = '(' + hook.toString() + ')()';
 document.documentElement.appendChild(script);
+// why are extensions "isloated" if you can just do this...
