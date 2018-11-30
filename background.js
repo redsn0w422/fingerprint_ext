@@ -1,3 +1,5 @@
+// Facilitates sending native notifications
+
 var notify = function(title, message) {
     var opt = {
         type: "basic",

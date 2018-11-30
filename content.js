@@ -20,20 +20,20 @@
 // TODO: wrap functions!
 // var wrap = require('lodash.wrap');
 
-chrome.runtime.sendMessage({message: window.location.toString()});
-var doThing = function(){
-    console.log(...arguments)
-}
+// chrome.runtime.sendMessage({message: window.location.toString()});
 
-var wrap = function(someFunction){
-    var wrappedFunction = function(){
-      var args = [...arguments].splice(0)
-      console.log(`You're about to run a function with these arguments: \n     ${args}`)
-      return someFunction(args)
+var hook = function() {
+    var wrap = function(someFunction){
+        var wrappedFunction = function(){
+            var args = [...arguments].splice(0)
+            console.log(`fn: ${someFunction.toString()}\nargs: ${args}`)
+            return someFunction(args)
+        }
+        return wrappedFunction
     }
-    return wrappedFunction
-}
+    window.navigator.mediaDevices.enumerateDevices = wrap(window.navigator.mediaDevices.enumerateDevices)
+};
 
-doThing = wrap(doThing);
-
-doThing('one', {two:'two'}, 3);
+var script = document.createElement('script');
+script.textContent = '(' + hook.toString() + ')()';
+document.documentElement.appendChild(script);
