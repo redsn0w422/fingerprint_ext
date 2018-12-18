@@ -1,27 +1,3 @@
-// alert("Hello world!")
-
-// var opt = {
-//     type: "basic",
-//     title: "Primary Title",
-//     message: "Primary message to display"//,
-//     // iconUrl: "url_to_small_icon"
-// }
-
-// var id = 'asdf'
-// chrome.notifications.create(opt);
-// console.log(chrome);
-// var notification = webkitNotifications.createNotification(
-//     // '48.png',  // icon url - can be relative
-//     'Hello!',  // notification title
-//     'Lorem ipsum...'  // notification body text
-// );
-// notification.show();
-
-// TODO: wrap functions!
-// var wrap = require('lodash.wrap');
-
-// chrome.runtime.sendMessage({message: window.location.toString()});
-
 var sendMessage = function(msg) {
     chrome.runtime.sendMessage({message: msg});
 }
@@ -34,7 +10,6 @@ document.addEventListener("hook", function(data) {
 
 var hook = function() {
     var newEvent = function(msg) {
-        // var event = document.createEvent('Event');
         var event = new CustomEvent('Event', {
             "detail": {
                 message: msg
@@ -50,15 +25,40 @@ var hook = function() {
             console.log(`HOOKED\tfn: ${someFunction.toString()}\nargs: ${args}`);
             let msg = `${someFunction.name}`;
             newEvent(msg);
-            return someFunction.call(window, args);
+            return someFunction(args);
         }
         return wrappedFunction
     }
-    // var test = "window.navigator.mediaDevices.enumerateDevices"
-    // var ftest = eval(test).bind(window)
-    // ftest = wrap(ftest)
-    window.navigator.mediaDevices.enumerateDevices = wrap(window.navigator.mediaDevices.enumerateDevices.bind(window))
-
+    if (window.navigator.mediaDevices.enumerateDevices) window.navigator.mediaDevices.enumerateDevices = wrap(window.navigator.mediaDevices.enumerateDevices)
+    if (window.OfflineAudioContext) window.OfflineAudioContext = wrap(window.OfflineAudioContext)
+    if (window.webkitOfflineAudioContext) window.webkitOfflineAudioContext = wrap(window.webkitOfflineAudioContext)
+    if (navigator.userAgent) navigator.userAgent = wrap(navigator.userAgent)
+    if (navigator.language) navigator.language = wrap(navigator.language)
+    if (navigator.userLanguage) navigator.userLanguage = wrap(navigator.userLanguage)
+    if (navigator.browserLanguage) navigator.browserLanguage = wrap(navigator.browserLanguage)
+    if (navigator.systemLanguage) navigator.systemLanguage = wrap(navigator.systemLanguage)
+    if (window.screen.colorDepth) window.screen.colorDepth = wrap(window.screen.colorDepth)
+    if (navigator.deviceMemory) navigator.deviceMemory = wrap(navigator.deviceMemory)
+    if (window.devicePixelRatio) window.devicePixelRatio = wrap(window.devicePixelRatio)
+    if (window.screen.width) window.screen.width = wrap(window.screen.width)
+    if (window.screen.height) window.screen.height = wrap(window.screen.height)
+    if (window.screen.availWidth) window.screen.availWidth = wrap(window.screen.availWidth)
+    if (window.screen.availHeight) window.screen.availHeight = wrap(window.screen.availHeight)
+    if (window.Intl) window.Intl = wrap(window.Intl)
+    if (window.Intl.DateTimeFormat) window.Intl.DateTimeFormat = wrap(window.Intl.DateTimeFormat)
+    if (window.sessionStorage) window.sessionStorage = wrap(window.sessionStorage)
+    if (window.localStorage) window.localStorage = wrap(window.localStorage)
+    if (window.indexedDB) window.indexedDB = wrap(window.indexedDB)
+    if (window.openDatabase) window.openDatabase = wrap(window.openDatabase)
+    if (navigator.cpuClass) navigator.cpuClass = wrap(navigator.cpuClass)
+    if (navigator.platform) navigator.platform = wrap(navigator.platform)
+    if (navigator.doNotTrack) navigator.doNotTrack = wrap(navigator.doNotTrack)
+    if (navigator.msDoNotTrack) navigator.msDoNotTrack = wrap(navigator.msDoNotTrack)
+    if (window.doNotTrack) window.doNotTrack = wrap(window.doNotTrack)
+    if (window.swfobject) window.swfobject = wrap(window.swfobject)
+    if (navigator.plugins) navigator.plugins = wrap(navigator.plugins)
+    if (navigator.maxTouchPoints) navigator.maxTouchPoints = wrap(navigator.maxTouchPoints)
+    if (navigator.hardwareConcurrency) navigator.hardwareConcurrency = wrap(navigator.hardwareConcurrency)
 };
 
 var script = document.createElement('script');
